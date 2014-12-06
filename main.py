@@ -121,10 +121,12 @@ def distancePoints(lon1, lat1, lon2, lat2):
     return int(m)
 
 def timeExtra(grade, distance, weightTotal, weightAdded, dragReduced, power):
-    if abs(grade) > 3:
+    if grade > 3:
         dragReduced = 0
     if grade <0:
         weightAdded = 0
+    if grade <-4:
+        return (1,0)
     grade = grade/100
     speedNormalFormula = numpy.poly1d([(0.3*(1) * 1.226),0,(9.8 * grade * \
                             (weightTotal)),((0.005 * weightTotal * 2.78)-power)])
@@ -365,9 +367,9 @@ def timeSaved(gradeDict, weightTotal, weightAdded, dragReduced, power, rounding)
         timeSavedPercentage = float(timeExtraOutput[-1]/timeExtraOutput[0])*100
         totalDistance += gradeDict[grade]
         if timeSavedPercentage > 0:
-            print("The time saved with aerobars on a grade of " +str(grade) + "% is: " +str(round(timeSavedPercentage,2)) + "% percent")
+            print("The time saved with aerobars on a grade of " +str(grade) + "% is: " +str(round(timeSavedPercentage,1)) + "% percent")
         elif timeSavedPercentage<0:
-            print("The time EXTRA SPENDED with aerobars on a grade of " +str(grade) + "% is: " +str(abs(round(timeSavedPercentage,2))) + "% percent")
+            print("The time EXTRA SPENDED with aerobars on a grade of " +str(grade) + "% is: " +str(abs(round(timeSavedPercentage,1))) + "% percent")
         elif timeSavedPercentage==0:
             print("No difference with aerobars on a grade of " +str(grade) + "%!")
         timeSavedTotal+=timeExtraOutput[-1]
